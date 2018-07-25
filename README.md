@@ -2,6 +2,15 @@
 This Open source is in beta mode.
 Every contribution is welcome!
 
+**The Bluetooth RSSI densor bash script was copied from this blog:**
+
+https://www.raspberrypi.org/forums/viewtopic.php?t=47466
+
+**(direct bash script link:)**
+
+https://www.raspberrypi.org/forums/viewtopic.php?t=47466#p417970
+
+
 requirements:
 *************
 
