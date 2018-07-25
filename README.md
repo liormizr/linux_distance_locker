@@ -15,5 +15,5 @@ requirements:
 *************
 
 1. Ubuntu Base Linux
-2. Python 3.4 or up
+2. Python 3.6 or up
 3. GNOME Screensaver - (you can overwrite with any command line)
