@@ -4,7 +4,6 @@ https://www.raspberrypi.org/forums/viewtopic.php?t=47466
 """
 import os
 import sys
-import argparse
 from pathlib import Path
 from itertools import cycle
 from collections import deque
@@ -32,16 +31,6 @@ LOCKER_STATUS_COMMAND = os.getenv(
 LOCKER_UNLOCK_SCREEN_SAVE_PREFIX = os.getenv(
     'LOCKER_UNLOCK_SCREEN_SAVE_PREFIX',
     'The screensaver is inactive')
-
-
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '-a', '--address',
-        required=True,
-        help='Your phone or another bluetooth device MAC Address')
-    options = parser.parse_args()
-    return bluetooth_distance_locker(options.address)
 
 
 def bluetooth_distance_locker(device_mac_address):
@@ -100,7 +89,3 @@ def bluetooth_distance_locker(device_mac_address):
                 state = UNLOCK_STATE
                 run(LOCKER_UNLOCK_COMMAND.split())
             print_state()
-
-
-if __name__ == '__main__':
-    sys.exit(main())

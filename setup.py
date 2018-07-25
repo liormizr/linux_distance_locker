@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from distutils.core import setup
+from setuptools import find_packages
 
 setup(
     name='distance_locker',
@@ -7,10 +8,9 @@ setup(
     url='https://github.com/liormizr/linux_distance_locker',
     author='Lior Mizrahi',
     author_email='li.mizr@gmail.com',
-    py_modules=['distance_locker'],
-    scripts=['bluetooth_distance_sensor.sh'],
+    packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'distance_locker = distance_locker:main',
+            'distance_locker = distance_locker.__main__:main',
     ]},
 )
