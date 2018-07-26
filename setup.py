@@ -9,6 +9,7 @@ setup(
     author='Lior Mizrahi',
     author_email='li.mizr@gmail.com',
     packages=find_packages(),
+    data_files=[('bin', ['bluetooth_distance_sensor.sh'])],
     entry_points={
         'console_scripts': [
             'distance_locker = distance_locker.__main__:main',

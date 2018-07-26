@@ -12,7 +12,7 @@ from subprocess import Popen, run, PIPE, STDOUT
 PROGRESS = cycle(['-', '\\', '|', '/'])
 UNLOCK_STATE = 'UNLOCK'
 LOCK_STATE = 'LOCK'
-SENSOR_SCRIPT_PATH = Path(__file__).parent.joinpath('bluetooth_distance_sensor.sh')
+SENSOR_SCRIPT_PATH = Path('bluetooth_distance_sensor.sh')
 DO_NOT_CARE_SENSOR_MESSAGES = [
     'Read RSSI failed: Input/output error',
     'Attempting connection...',
