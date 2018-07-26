@@ -1,1 +1,1 @@
-include distance_locker/bluetooth_distance_sensor.sh
+recursive-include distance_locker *.sh *.py
