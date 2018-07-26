@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='distance_locker',
-    version='0.0.1',
+    version='0.0.2',
     url='https://github.com/liormizr/linux_distance_locker',
     author='Lior Mizrahi',
     author_email='li.mizr@gmail.com',
