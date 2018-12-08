@@ -1,16 +1,7 @@
-# linux_distance_locker
-This Open source is in beta mode.
+Linux Desktop Distance Locker:
+==============================
 
-Every contribution is welcome!
-
-**The Bluetooth RSSI densor bash script was copied from this blog:**
-
-https://www.raspberrypi.org/forums/viewtopic.php?t=47466
-
-**(direct bash script link:)**
-
-https://www.raspberrypi.org/forums/viewtopic.php?t=47466#p417970
-
+**NOTE**: This Open-Source is in beta mode.
 
 Requirements:
 =============
@@ -27,4 +18,15 @@ Usage:
   $ distance_locker -a <Bluetooth driver mac address>
 ```
 
+
+**The Bluetooth RSSI sensor bash script was copied from this blog:**
+
+https://www.raspberrypi.org/forums/viewtopic.php?t=47466
+
+**(direct bash script link:)**
+
+https://www.raspberrypi.org/forums/viewtopic.php?t=47466#p417970
+
+
+Every contribution is welcome!
 Enjoy
