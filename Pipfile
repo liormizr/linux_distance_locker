@@ -1,0 +1,14 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+bpython = "==0.16"
+blinker = "*"
+gif-for-cli = "*"
+
+[requires]
+python_version = "3.6"
