@@ -27,6 +27,19 @@ https://www.raspberrypi.org/forums/viewtopic.php?t=47466
 
 https://www.raspberrypi.org/forums/viewtopic.php?t=47466#p417970
 
+Talk:
+=====
+
+**To run the BPython sell talk simply:**
+ 
+clone this repo, and run:
+
+```
+  $ pipenv install
+  $ pipenv run python story.py
+```
+
 
 Every contribution is welcome!
+
 Enjoy
