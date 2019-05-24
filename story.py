@@ -1,13 +1,15 @@
+import os
 import sys
 import logging
 import inspect
 from contextlib import suppress
-from functools import lru_cache
 from collections import namedtuple
 from itertools import cycle, islice
+from functools import lru_cache, partial
 from subprocess import run, Popen, STDOUT, PIPE
 
 from blinker import signal
+from colorama import init, Fore, Style, Back
 from bpython.curtsies import (
     io,
     repl,
@@ -24,6 +26,7 @@ from bpython.curtsies import (
     bpythonevents,
     SystemExitFromCodeGreenlet,
 )
+init()
 
 
 _CodeSnippet = namedtuple('_CodeSnippet', 'code, suite, example')
@@ -57,6 +60,7 @@ DO_NOT_CARE_SENSOR_MESSAGES = (
     'GONE!',
     'HERE!',
 )
+PHONE_ADDRESS = os.getenv('PHONE_ADDRESS')
 
 
 def main(args=None, locals_=None, welcome_message=None):
@@ -173,7 +177,12 @@ def _mainloop(_repl):
         loop_handler()
 
 
-def explanation_snippets(example):
+def explanation_snippets(example=None, *, docs=None):
+    if not example:
+        return partial(explanation_snippets, docs=docs)
+    if docs:
+        example.__doc__ = docs
+
     suite = example.__module__.split('.')[-1]
     code_lines = []
     for line in inspect.getsource(example).splitlines()[2:]:
@@ -277,33 +286,31 @@ def switch_example(event: str):
         return '## ' + 'Previous Suite ' + '#'*30
 
 
-@explanation_snippets
-def the_story():
-    """
+@explanation_snippets(docs=f"""
     Our story started a couple of years ago,
     When I worked at a small startup.
 
     We were successful, and with success comes growth,
-    With growth comes security.
+    With growth comes {Fore.RED}{Style.BRIGHT}security{Style.RESET_ALL}.
 
     We needed to become SOC2 compliant.
-    """
+    """)
+def the_story():
+    pass
 
 
-@explanation_snippets
-def the_issue():
-    """
+@explanation_snippets(docs=f"""
     New Company Rule:
 
     If a worker is leaving his station,
     he have to logout his computer.
-    IMMEDIATELY!!!!!!!!!!!!!!!!!!!!!!!
-    """
+    {Back.MAGENTA}{Fore.CYAN}{Style.BRIGHT}IMMEDIATELY!!!!!!!!!!!!!!!!!!!!!!!{Style.RESET_ALL}
+    """)
+def the_issue():
+    pass
 
 
-@explanation_snippets
-def the_scenario():
-    """
+@explanation_snippets(docs=f"""
     So, What Happens in this case:
 
     1. Security team start to work more on
@@ -314,49 +321,52 @@ def the_scenario():
        * pranking on another,
        * hacking each other computer
 
-    What to do? :-(
-    """
+    What to do? {Style.BRIGHT}ヽ(ಠ_ಠ)ノ{Style.RESET_ALL}
+    """)
+def the_scenario():
+    pass
 
 
-@explanation_snippets
-def the_idea():
-    """
-    I know!
+@explanation_snippets(docs=f"""
+    I know! {Style.BRIGHT}{Fore.YELLOW}💡{Style.RESET_ALL}
 
     Use the Phone (Or any Bluetooth device)
     to lock and unlock the PC automatically!?!?!
 
     detect distance...
-    """
+    """)
+def the_idea():
+    pass
 
 
-@explanation_snippets
+@explanation_snippets(docs=f"""
+    {Style.BRIGHT}{Fore.BLUE}G{Fore.RED}o{Fore.YELLOW}o{Fore.BLUE}g{Fore.GREEN}l{Fore.RED}e{Style.RESET_ALL} it!
+    Search: {Style.BRIGHT}Bluetooth desktop locker{Style.RESET_ALL}
+
+    * For Windows: Win 10 have a feature: dynamic-lock
+
+    * For Mac: multiple app stor apps for that (Need to pay)
+    For Example: https://nearlock.me/
+
+    * For Linux: blueproximity
+    In Python, OpenSource, BUT!
+    """)
 def the_research_1():
-    """
-    Research process:
-    1. Google it! ("Bluetooth desktop locker")
-      * For Windows: dynamic-lock
-    https://www.windowscentral.com/workaround-set-dynamic-lock-windows-10-build-15031
-
-      * For Mac: multiple app stor apps for that (Need to pay)
-        For Example: https://nearlock.me/
-
-      * For Linux: blueproximity
-        In Python, OpenSource, BUT!
-    """
+    pass
 
 
-@explanation_snippets
+@explanation_snippets(docs=f"""
+    {Style.BRIGHT}{Fore.BLUE}G{Fore.RED}o{Fore.YELLOW}o{Fore.BLUE}g{Fore.GREEN}l{Fore.RED}e{Style.RESET_ALL} it again!
+    Search: {Style.BRIGHT}Linux Bluetooth distance sensing{Style.RESET_ALL}
+
+    * Found a blog that explains how to write it!
+    https://www.raspberrypi.org/forums/viewtopic.php?t=47466
+
+    {Style.BRIGHT}WOWOWOWO!{Style.RESET_ALL} In the comments there's a bash script!!!
+    https://www.raspberrypi.org/forums/viewtopic.php?t=47466#p417970
+    """)
 def the_research_2():
-    """
-    2. Google it again! ("Linux Bluetooth distance sensing")
-
-      Found a blog that explains how to write it!
-      https://www.raspberrypi.org/forums/viewtopic.php?t=47466
-
-      WOWOWOWO! in the comments there's a bash script!!!
-      https://www.raspberrypi.org/forums/viewtopic.php?t=47466#p417970
-    """
+    pass
 
 
 @explanation_snippets
@@ -399,9 +409,8 @@ def developing_3():
     3. The logic:
 
     * Queue: deque(maxlen=5)
-    * Every "Not connected." == adding -255 to the queue
     * Every RSSI < -1 == adding RSSI value to the queue
-    * Every RSSI >= -1 == pop the oldest value from the queue
+    * Every RSSI >= -1 == poping the oldest RSSI value from the queue
 
     * If the Queue gets full (5 values)
       - LOCK the Desktop
