@@ -12,5 +12,6 @@ def main():
     options = parser.parse_args()
     return bluetooth_distance_locker(options.address)
 
+
 if __name__ == '__main__':
     sys.exit(main())

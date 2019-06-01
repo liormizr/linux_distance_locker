@@ -246,12 +246,6 @@ def switch_example(event: str):
         repl.process_event_and_paint(CLEAR_SCREEN_SYMBOL)
 
         repl.interp.locals.update(globals())
-        code = '\n'.join(
-            line
-            for line in code_snippet.code.splitlines()
-            if not line.startswith('\x1b')
-        )
-
         code_text = f'{code_snippet.example.__name__}:\n{code_snippet.example.__doc__}\n'
         repl.send_to_stdout(code_text)
         if hasattr(code_snippet.example, 'code'):
@@ -261,8 +255,6 @@ def switch_example(event: str):
                 repl.process_event_and_paint(l)
             repl.process_event_and_paint('<Ctrl-u>')
             repl.process_event_and_paint('\n')
-
-        # exec(code, repl.interp.locals)
 
     if event == NEXT_SYMBOL:
         code_snippets = explanation_map.current or explanation_map.next()
@@ -302,8 +294,8 @@ def the_story():
 @explanation_snippets(docs=f"""
     New Company Rule:
 
-    If a worker is leaving his station,
-    he have to logout his computer.
+    If a worker leaves his station,
+    he has to logout from his computer.
     {Back.MAGENTA}{Fore.CYAN}{Style.BRIGHT}IMMEDIATELY!!!!!!!!!!!!!!!!!!!!!!!{Style.RESET_ALL}
     """)
 def the_issue():
@@ -320,6 +312,8 @@ def the_issue():
        starting to behave differently.
        * pranking on another,
        * hacking each other computer
+
+    Bad company dynamics!
 
     What to do? {Style.BRIGHT}ヽ(ಠ_ಠ)ノ{Style.RESET_ALL}
     """)
@@ -343,9 +337,9 @@ def the_idea():
     {Style.BRIGHT}{Fore.BLUE}G{Fore.RED}o{Fore.YELLOW}o{Fore.BLUE}g{Fore.GREEN}l{Fore.RED}e{Style.RESET_ALL} it!
     Search: {Style.BRIGHT}Bluetooth desktop locker{Style.RESET_ALL}
 
-    * For Windows: Win 10 have a feature: dynamic-lock
+    * For Windows: Win 10 has this feature: dynamic-lock
 
-    * For Mac: multiple app stor apps for that (Need to pay)
+    * For Mac: multiple app store apps for that (Need to pay)
     For Example: https://nearlock.me/
 
     * For Linux: blueproximity
@@ -362,7 +356,7 @@ def the_research_1():
     * Found a blog that explains how to write it!
     https://www.raspberrypi.org/forums/viewtopic.php?t=47466
 
-    {Style.BRIGHT}WOWOWOWO!{Style.RESET_ALL} In the comments there's a bash script!!!
+    {Style.BRIGHT}WOWWWWW!{Style.RESET_ALL} In the comments there's a bash script!!!
     https://www.raspberrypi.org/forums/viewtopic.php?t=47466#p417970
     """)
 def the_research_2():
@@ -372,12 +366,14 @@ def the_research_2():
 @explanation_snippets
 def developing_1():
     """
-    1. copied the bash Bluetooth distance script
+    1. Copy the bash Bluetooth distance script.
+Execute subprocess.Popen to run it as a child program in a new process.
     """
 developing_1.code = (
     'def distance_script(address):',
-    'with suppress(KeyboardInterrupt):',
-    "run(['bluetooth_distance_sensor.sh', address])",
+    "process = Popen(['bluetooth_distance_sensor.sh', address])",
+    'with process, suppress(KeyboardInterrupt):',
+    'process.wait()',
     '',
 )
 
@@ -408,13 +404,13 @@ def developing_3():
     """
     3. The logic:
 
-    * Queue: deque(maxlen=5)
-    * Every RSSI < -1 == adding RSSI value to the queue
-    * Every RSSI >= -1 == poping the oldest RSSI value from the queue
+    * Queue: collections.deque(maxlen=5)
+    * Every RSSI < -1 == adds RSSI value to the queue
+    * Every RSSI >= -1 == pops the oldest RSSI value from the queue
 
     * If the Queue gets full (5 values)
       - LOCK the Desktop
-    * If the status is LOCKED and the queue go down under 4 values
+    * If the status is LOCKED and the queue goes down under 4 values
       - UNLOCK the Desktop
     """
 
