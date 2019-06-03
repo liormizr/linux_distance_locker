@@ -364,6 +364,18 @@ def the_research_2():
 
 
 @explanation_snippets
+def bluetooth_distance_sensor():
+    """
+    How does the bluetooth distance sensor works??
+    """
+bluetooth_distance_sensor.code = (
+    'def open_sensor_in_editor():',
+    "run(['vim', 'bluetooth_distance_sensor.sh'])",
+    '',
+)
+
+
+@explanation_snippets
 def developing_1():
     """
     1. Copy the bash Bluetooth distance script.
@@ -416,12 +428,28 @@ def developing_3():
 
 
 @explanation_snippets
+def finished_project():
+    """
+    How does the finished project looks like??
+    """
+finished_project.code = (
+    'def open_finished_project_in_editor():',
+    "run(['vim', 'details.py'])",
+    '',
+)
+
+
+@explanation_snippets
 def end():
     """
     Demo and questions
-
-    $ distance_locker -a <mac address>
     """
+end.code = (
+    'def demo():',
+    'with suppress(KeyboardInterrupt):',
+    "run(['distance_locker', '-a', PHONE_ADDRESS])",
+    '',
+)
 
 
 if __name__ == '__main__':
